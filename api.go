@@ -1,11 +1,23 @@
 package td
 
 import (
+	"encoding/json"
 	"strconv"
 )
 
-func (t *TreasureData) ListDatabases() string {
-	return GetRequest(t.Options, "/v3/database/list")
+func (t *TreasureData) ListDatabases() DatabaseList {
+	r := GetRequest(t.Options, "/v3/database/list")
+	dblist := DatabaseList{}
+	err := json.Unmarshal([]byte(r), &dblist)
+	if err != nil {
+		panic(err)
+	}
+	return dblist
+}
+
+func (t *TreasureData) CreateDatabase(db_name string) bool {
+	PostRequest(t.Options, "/v3/database/create/"+db_name, nil)
+	return true
 }
 
 func (t *TreasureData) ListTables(db string) string {
