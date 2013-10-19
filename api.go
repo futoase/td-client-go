@@ -2,11 +2,12 @@ package td
 
 import (
 	"encoding/json"
+	"net/url"
 	"strconv"
 )
 
 func (t *TreasureData) ListDatabases() DatabaseList {
-	r := GetRequest(t.Options, "/v3/database/list")
+	r := GetRequest(t.Options, "/v3/database/list", nil)
 	dblist := DatabaseList{}
 	err := json.Unmarshal([]byte(r), &dblist)
 	if err != nil {
@@ -16,7 +17,7 @@ func (t *TreasureData) ListDatabases() DatabaseList {
 }
 
 func (t *TreasureData) ListTables(db string) TableList {
-	r := GetRequest(t.Options, "/v3/table/list/"+db)
+	r := GetRequest(t.Options, "/v3/table/list/"+db, nil)
 	tablelist := TableList{}
 	err := json.Unmarshal([]byte(r), &tablelist)
 	if err != nil {
@@ -30,22 +31,36 @@ func (t *TreasureData) CreateDatabase(db_name string) bool {
 	return true
 }
 
+func (t *TreasureData) ListJobs(params *url.Values) JobsList {
+	if params == nil {
+		params := url.Values{}
+		params.Add("from", "0")
+	}
+	r := GetRequest(t.Options, "/v3/job/list", params)
+	jobslist := JobsList{}
+	err := json.Unmarshal([]byte(r), &jobslist)
+	if err != nil {
+		panic(err)
+	}
+	return jobslist
+}
+
 func (t *TreasureData) ShowJobs(job_id int) string {
-	return GetRequest(t.Options, "/v3/job/show/"+strconv.Itoa(job_id))
+	return GetRequest(t.Options, "/v3/job/show/"+strconv.Itoa(job_id), nil)
 }
 
 func (t *TreasureData) JobResult(job_id int) string {
-	return GetRequest(t.Options, "/v3/job/result"+strconv.Itoa(job_id))
+	return GetRequest(t.Options, "/v3/job/result"+strconv.Itoa(job_id), nil)
 }
 
 func (t *TreasureData) ListSchedules() string {
-	return GetRequest(t.Options, "/v3/schedule/list")
+	return GetRequest(t.Options, "/v3/schedule/list", nil)
 }
 
 func (t *TreasureData) ListResult() string {
-	return GetRequest(t.Options, "/v3/result/list")
+	return GetRequest(t.Options, "/v3/result/list", nil)
 }
 
 func (t *TreasureData) ServerStatus() string {
-	return GetRequest(t.Options, "/v3/system/server_status")
+	return GetRequest(t.Options, "/v3/system/server_status", nil)
 }

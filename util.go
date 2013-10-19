@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 )
 
 func GetHostUrl(o *Options) string {
@@ -22,8 +23,12 @@ func CreateRequest(o *Options, method string, url string, body io.Reader) string
 	return ReadBody(resp)
 }
 
-func GetRequest(o *Options, path string) string {
-	return CreateRequest(o, "GET", GetHostUrl(o)+path, nil)
+func GetRequest(o *Options, path string, params *url.Values) string {
+	uri := GetHostUrl(o) + path
+	if params != nil {
+		uri += "?" + params.Encode()
+	}
+	return CreateRequest(o, "GET", uri, nil)
 }
 
 func PostRequest(o *Options, path string, body io.Reader) string {
