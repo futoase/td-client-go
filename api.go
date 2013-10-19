@@ -2,6 +2,7 @@ package td
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/url"
 	"strconv"
 )
@@ -45,8 +46,15 @@ func (t *TreasureData) ListJobs(params *url.Values) JobsList {
 	return jobslist
 }
 
-func (t *TreasureData) ShowJobs(job_id int) string {
-	return GetRequest(t.Options, "/v3/job/show/"+strconv.Itoa(job_id), nil)
+func (t *TreasureData) ShowJobs(job_id int) Job {
+	r := GetRequest(t.Options, "/v3/job/show/"+strconv.Itoa(job_id), nil)
+	fmt.Printf(r)
+	job := Job{}
+	err := json.Unmarshal([]byte(r), &job)
+	if err != nil {
+		panic(err)
+	}
+	return job
 }
 
 func (t *TreasureData) JobResult(job_id int) string {
