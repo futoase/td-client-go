@@ -15,13 +15,19 @@ func (t *TreasureData) ListDatabases() DatabaseList {
 	return dblist
 }
 
+func (t *TreasureData) ListTables(db string) TableList {
+	r := GetRequest(t.Options, "/v3/table/list/"+db)
+	tablelist := TableList{}
+	err := json.Unmarshal([]byte(r), &tablelist)
+	if err != nil {
+		panic(err)
+	}
+	return tablelist
+}
+
 func (t *TreasureData) CreateDatabase(db_name string) bool {
 	PostRequest(t.Options, "/v3/database/create/"+db_name, nil)
 	return true
-}
-
-func (t *TreasureData) ListTables(db string) string {
-	return GetRequest(t.Options, "/v3/table/list/"+db)
 }
 
 func (t *TreasureData) ShowJobs(job_id int) string {
