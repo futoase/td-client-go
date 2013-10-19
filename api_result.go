@@ -56,3 +56,7 @@ type Job struct {
 	Organization       string
 	Database           string
 }
+
+type ServerStatus struct {
+	Status string
+}
