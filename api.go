@@ -38,6 +38,16 @@ func (t *TreasureData) CreateDatabase(db_name string) CreateDatabaseResult {
 	return result
 }
 
+func (t *TreasureData) DeleteDatabase(db_name string) DeleteDatabaseResult {
+	r := PostRequest(t.Options, "/v3/database/delete/"+db_name, nil)
+	result := DeleteDatabaseResult{}
+	err := json.Unmarshal([]byte(r), &result)
+	if err != nil {
+		panic(err)
+	}
+	return result
+}
+
 func (t *TreasureData) ListJobs(params *url.Values) JobsList {
 	if params == nil {
 		params := &url.Values{}

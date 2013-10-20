@@ -103,3 +103,8 @@ type CreateDatabaseResult struct {
 	Database string
 	Message  string
 }
+
+type DeleteDatabaseResult struct {
+	Database string
+	Message  string
+}
