@@ -75,8 +75,14 @@ func (t *TreasureData) JobResult(job_id int) JobResults {
 	return jobresult
 }
 
-func (t *TreasureData) ListSchedules() string {
-	return GetRequest(t.Options, "/v3/schedule/list", nil)
+func (t *TreasureData) ListSchedules() Schedules {
+	r := GetRequest(t.Options, "/v3/schedule/list", nil)
+	schedules := Schedules{}
+	err := json.Unmarshal([]byte(r), &schedules)
+	if err != nil {
+		panic(err)
+	}
+	return schedules
 }
 
 func (t *TreasureData) ListResult() string {

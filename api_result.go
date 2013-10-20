@@ -66,6 +66,25 @@ type JobResult struct {
 	Count  string
 }
 
+type Schedules struct {
+	Schedules []Schedule
+}
+
+type Schedule struct {
+	Name        string
+	Cron        string
+	Type        string
+	Query       string
+	TimeZone    string
+	Delay       int
+	Database    string
+	User_Name   string
+	Priority    int
+	Retry_Limit int
+	Result      string
+	Next_Time   string
+}
+
 type ServerStatus struct {
 	Status string
 }
