@@ -1,6 +1,8 @@
 package td
 
 import (
+	"bytes"
+	"encoding/csv"
 	"encoding/json"
 	"net/url"
 	"strconv"
@@ -33,7 +35,7 @@ func (t *TreasureData) CreateDatabase(db_name string) bool {
 
 func (t *TreasureData) ListJobs(params *url.Values) JobsList {
 	if params == nil {
-		params := url.Values{}
+		params := &url.Values{}
 		params.Add("from", "0")
 	}
 	r := GetRequest(t.Options, "/v3/job/list", params)
@@ -55,8 +57,22 @@ func (t *TreasureData) ShowJobs(job_id int) Job {
 	return job
 }
 
-func (t *TreasureData) JobResult(job_id int) string {
-	return GetRequest(t.Options, "/v3/job/result"+strconv.Itoa(job_id), nil)
+func (t *TreasureData) JobResult(job_id int) JobResults {
+	params := &url.Values{}
+	params.Add("format", "tsv")
+	r := GetRequest(t.Options, "/v3/job/result/"+strconv.Itoa(job_id), params)
+	b := bytes.NewBufferString(r)
+	reader := csv.NewReader(b)
+	reader.Comma = '\t'
+	result, err := reader.ReadAll()
+	if err != nil {
+		panic(err)
+	}
+	jobresult := JobResults{}
+	for i := 0; i < len(result); i++ {
+		jobresult.JobResult = append(jobresult.JobResult, JobResult{result[i][0], result[i][1]})
+	}
+	return jobresult
 }
 
 func (t *TreasureData) ListSchedules() string {

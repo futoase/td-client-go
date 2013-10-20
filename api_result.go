@@ -57,6 +57,15 @@ type Job struct {
 	Database           string
 }
 
+type JobResults struct {
+	JobResult []JobResult
+}
+
+type JobResult struct {
+	Status string
+	Count  string
+}
+
 type ServerStatus struct {
 	Status string
 }
