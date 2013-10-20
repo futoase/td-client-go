@@ -28,9 +28,14 @@ func (t *TreasureData) ListTables(db string) TableList {
 	return tablelist
 }
 
-func (t *TreasureData) CreateDatabase(db_name string) bool {
-	PostRequest(t.Options, "/v3/database/create/"+db_name, nil)
-	return true
+func (t *TreasureData) CreateDatabase(db_name string) CreateDatabaseResult {
+	r := PostRequest(t.Options, "/v3/database/create/"+db_name, nil)
+	result := CreateDatabaseResult{}
+	err := json.Unmarshal([]byte(r), &result)
+	if err != nil {
+		panic(err)
+	}
+	return result
 }
 
 func (t *TreasureData) ListJobs(params *url.Values) JobsList {

@@ -98,3 +98,8 @@ type Result struct {
 	Url          string
 	Organization string
 }
+
+type CreateDatabaseResult struct {
+	Database string
+	Message  string
+}
