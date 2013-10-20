@@ -108,3 +108,8 @@ type DeleteDatabaseResult struct {
 	Database string
 	Message  string
 }
+
+type KillJobResult struct {
+	Job_Id        string
+	Former_Status string
+}

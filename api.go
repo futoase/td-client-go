@@ -72,6 +72,16 @@ func (t *TreasureData) ShowJobs(job_id int) Job {
 	return job
 }
 
+func (t *TreasureData) KillJob(job_id int) KillJobResult {
+	r := PostRequest(t.Options, "/v3/job/kill/"+strconv.Itoa(job_id), nil)
+	killresult := KillJobResult{}
+	err := json.Unmarshal([]byte(r), &killresult)
+	if err != nil {
+		panic(err)
+	}
+	return killresult
+}
+
 func (t *TreasureData) JobResult(job_id int) JobResults {
 	params := &url.Values{}
 	params.Add("format", "tsv")
