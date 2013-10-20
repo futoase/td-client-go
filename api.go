@@ -85,8 +85,14 @@ func (t *TreasureData) ListSchedules() Schedules {
 	return schedules
 }
 
-func (t *TreasureData) ListResult() string {
-	return GetRequest(t.Options, "/v3/result/list", nil)
+func (t *TreasureData) ListResult() Results {
+	r := GetRequest(t.Options, "/v3/result/list", nil)
+	results := Results{}
+	err := json.Unmarshal([]byte(r), &results)
+	if err != nil {
+		panic(err)
+	}
+	return results
 }
 
 func (t *TreasureData) ServerStatus() ServerStatus {

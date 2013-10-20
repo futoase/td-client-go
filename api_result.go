@@ -88,3 +88,13 @@ type Schedule struct {
 type ServerStatus struct {
 	Status string
 }
+
+type Results struct {
+	Result []Result
+}
+
+type Result struct {
+	Name         string
+	Url          string
+	Organization string
+}
