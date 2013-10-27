@@ -1,4 +1,4 @@
-td-client-go
+td-client-go [![Build Status](https://travis-ci.org/futoase/td-client-go.png?branch=master)](https://travis-ci.org/futoase/td-client-go)
 ============
 
 TreasureData client for golang.
