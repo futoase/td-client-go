@@ -5,6 +5,11 @@ TreasureData client for golang.
 
 Referenced of [td-client-node](https://github.com/treasure-data/td-client-node).
 
+Document
+--------
+
+http://godoc.org/github.com/futoase/td-client-go
+
 How to install
 --------------
 
