@@ -106,6 +106,13 @@ type CreateTableResult struct {
 	Message  string
 }
 
+type SwapTableResult struct {
+	Table1   string
+	Table2   string
+	Database string
+	Message  string
+}
+
 type CreateDatabaseResult struct {
 	Database string
 	Message  string
