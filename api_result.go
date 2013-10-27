@@ -99,6 +99,13 @@ type Result struct {
 	Organization string
 }
 
+type CreateTableResult struct {
+	Table    string
+	Type     string
+	Database string
+	Message  string
+}
+
 type CreateDatabaseResult struct {
 	Database string
 	Message  string

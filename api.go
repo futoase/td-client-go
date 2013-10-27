@@ -38,6 +38,16 @@ func (t *TreasureData) CreateDatabase(db_name string) CreateDatabaseResult {
 	return result
 }
 
+func (t *TreasureData) CreateTable(db_name string, table_name string, table_type string) CreateTableResult {
+	r := PostRequest(t.Options, "/v3/table/create/"+db_name+"/"+table_name+"/"+table_type, nil)
+	result := CreateTableResult{}
+	err := json.Unmarshal([]byte(r), &result)
+	if err != nil {
+		panic(err)
+	}
+	return result
+}
+
 func (t *TreasureData) DeleteDatabase(db_name string) DeleteDatabaseResult {
 	r := PostRequest(t.Options, "/v3/database/delete/"+db_name, nil)
 	result := DeleteDatabaseResult{}
