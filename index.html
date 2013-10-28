@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Td-client-go by futoase</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Td-client-go</h1>
+        <p class="header">td client for golang.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/futoase/td-client-go/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/futoase/td-client-go/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/futoase/td-client-go">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/futoase">futoase</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a name="td-client-go-" class="anchor" href="#td-client-go-"><span class="octicon octicon-link"></span></a>td-client-go <a href="https://travis-ci.org/futoase/td-client-go"><img src="https://travis-ci.org/futoase/td-client-go.png?branch=master" alt="Build Status"></a>
+</h1>
+
+<p>TreasureData client for golang.</p>
+
+<p>Referenced of <a href="https://github.com/treasure-data/td-client-node">td-client-node</a>.</p>
+
+<h2>
+<a name="document" class="anchor" href="#document"><span class="octicon octicon-link"></span></a>Document</h2>
+
+<p><a href="http://godoc.org/github.com/futoase/td-client-go">http://godoc.org/github.com/futoase/td-client-go</a></p>
+
+<h2>
+<a name="how-to-install" class="anchor" href="#how-to-install"><span class="octicon octicon-link"></span></a>How to install</h2>
+
+<pre><code>&gt; go get github.com/futoase/td-client-go
+</code></pre>
+
+<h2>
+<a name="sample" class="anchor" href="#sample"><span class="octicon octicon-link"></span></a>Sample</h2>
+
+<div class="highlight highlight-go"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"github.com/futoase/td-client-go"</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">options</span> <span class="o">:=</span> <span class="nx">td</span><span class="p">.</span><span class="nx">NewOptions</span><span class="p">(</span><span class="s">"Treasure data api key"</span><span class="p">)</span>
+    <span class="nx">client</span> <span class="o">:=</span> <span class="nx">td</span><span class="p">.</span><span class="nx">NewTreasureData</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+    <span class="nx">d</span> <span class="o">:=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">ListDatabases</span><span class="p">()</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">Databases</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+      <span class="nx">row</span> <span class="p">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">Database</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">"table: %v\n count: %v\n created_at: %v\n updated_at: %v\n"</span><span class="p">,</span> <span class="nx">row</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">row</span><span class="p">.</span><span class="nx">Count</span><span class="p">,</span> <span class="nx">row</span><span class="p">.</span><span class="nx">Created_At</span><span class="p">,</span> <span class="nx">row</span><span class="p">.</span><span class="nx">Updated_At</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p><strong>result</strong></p>
+
+<pre><code>&gt; go build main.go
+&gt; ./main
+table: applications
+ count: 4
+ created_at: 2013-08-16 21:11:22 UTC
+ updated_at: 2013-08-16 21:11:22 UTC
+table: debug
+ count: 5
+ created_at: 2013-09-04 08:43:59 UTC
+ updated_at: 2013-09-04 08:43:59 UTC
+table: fluent-test
+ count: 209
+ created_at: 2013-07-12 10:29:02 UTC
+ updated_at: 2013-07-12 10:29:02 UTC
+table: api-test
+ count: 7
+ created_at: 2013-07-05 02:31:50 UTC
+ updated_at: 2013-07-05 02:31:50 UTC
+</code></pre>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>LICENSE</h2>
+
+<p>MIT.</p>
+
+<p><a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/futoase/td-client-go/trend.png" alt="Bitdeli Badge"></a></p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
